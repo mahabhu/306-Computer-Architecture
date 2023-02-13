@@ -73,7 +73,7 @@ int main(void)
 				int rd;
 				if(regdst==0) rd = r4;
 				else rd = r0;
-				PORTA = ( (regArr[rs]<< 4) | regArr[rt]%16)%256;
+				PORTA = ( (regArr[rt]<< 4) | regArr[rs]%16)%256;
 				if(prevclk==0 && currclk == 1 && regwrite){
 					regArr[rd] = wd;
 				}

@@ -9,8 +9,8 @@ int main(void)
 {
 	MCUCSR|=(1<<JTD);
 	MCUCSR|=(1<<JTD);
- 
- 
+	
+	
 	DDRA=0XFF;
 	DDRB=0x00;
 	DDRC=0x00;
@@ -22,19 +22,21 @@ int main(void)
 	int memread;
 	int memwrite;
 	int writedata;
-	int addr;
-	int dataout;
+	unsigned int addr;
+	unsigned int dataout;
+	unsigned int b;
+	unsigned int d;
 	
 	for(int i=0; i<16; i++){
 		memArr[i]=13;
 	}
 	
-    while (1) 
-    {
-		int b = PINB;
+	while (1)
+	{
+		b = PINB ;
 		writedata = b>>4;
 		addr = b%16;
-		int d = PIND;
+		d = PIND;
 		prevclk = currclk;
 		currclk = (d & 0b0001);
 		mem2reg = (d & 0b0010)>>1;
@@ -43,17 +45,16 @@ int main(void)
 		
 		dataout = memArr[addr];
 		
-		if(memread==1){
-			if(mem2reg==1) PORTA = dataout;
-			else PORTA = addr;
-		}
+		if(mem2reg==1) PORTA = dataout;
+		else PORTA = addr;
+		
 		if(prevclk==0 && currclk==1 && memwrite==1){
 			memArr[addr] = writedata;
 		}
 		_delay_ms(10);
 		
 		
-    }
+	}
 }
 
 //DataMemoryUpdated

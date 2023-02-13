@@ -56,9 +56,9 @@ int main(void)
 	
 	
 	DDRA=0xFF;
-	DDRB=0X00; // B0 to B3-> reg1; B4->B7 shamt
-	DDRD=0X00; // D0 to D3-> reg2;
-	DDRC=0XFF; // C0 to C3-> dataOutput
+	DDRB=0X00; 
+	DDRD=0X00; 
+	DDRC=0XFF; 
 
 	//DDRA=0X00; // ShowAddr A0 to A4; A5-> showaddrflag
 	
@@ -79,7 +79,7 @@ int main(void)
 	{
 		unsigned int operation = PINB & 0b00001111; 
 		// taking input such as ADD OR , based on 4 bits 
-		// actually 1-15 
+		// actually 0-15 
 
 		int ctrlOUT1 = controlMem[operation]%256;
 		// now we have the value for each mux and aluop in int form

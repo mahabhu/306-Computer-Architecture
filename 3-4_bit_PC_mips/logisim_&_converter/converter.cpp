@@ -165,18 +165,54 @@ int main()
         }
     }
     f1.close();
-    cout<< endl<< endl;
+    //cout<< endl<< endl;
     f1.open("assembly.txt");
     linecnt = 0;
+    vector<string> instructions;
     if(f1.is_open()){
         string line;
         while(getline(f1,line)){
 
             string insfin = convert(line);
             linecnt++;
-            if(insfin.size()==16) cout<< str2hex(insfin)<< endl;
-            cout<< insfin<< endl;
+            if(insfin.size()==16) instructions.pb(str2hex(insfin));
+            //cout<< insfin<< endl;
         }
     }
+    cout<< "unsigned int instruction[256]={\n";
+    for(ll i=0; i<256; i++){
+        cout<< "0x";
+        (i<instructions.size())? cout<< instructions[i] : cout<< "0000";
+        if(i<255) cout<< ",";
+        else cout<< "};";
+        if(i%16==15) cout<< "\n";
+
+    }
 }
+
+
+/*
+
+		addi $t1, $zero, 3		// t1 = 3
+ 		subi $t2, $zero, -2		//t2 = 2
+ 		add $t0, $t1, $t2 		//t0 = 5
+ 		sub $t3, $t1, $t2		//t3 = 1
+ 		nor $t4, $t0, $t2		//t4 = 8
+ 		sw $t1, 3($t2)          //m5 = 3
+ 		srl $t2, $t2, 1			//t2 = 1
+ 		beq $t2, $t3, label1	// t2==t3==1 so jmp to label1
+ 		j end
+ label1:	sll $t3, $t3, 1		//t3 = 2
+ 		lw $t2, 4($t2)          //m5 = 3, t2 = 3
+ 		j label2		        // lebel2
+ label3:    or $t0, $t0, $t2    // t0 = 5, t2 = 3, t0 = 7
+ 		andi $t2, $t4, 1		//
+ 		ori $t1, $t1, 5
+ 		and $t1, $t2, $t4
+ 		j end
+ label2:    bneq $t0, $t2, label3	//t0 = 5, t2 = 3, jmp to label3
+ end:
+
+
+*/
 

@@ -59,6 +59,7 @@ int main(void)
 	int ALUsrc;
 	int beqf;
 	int bneqf;
+	int bsel;
 
 	while (1)
 	{
@@ -120,10 +121,10 @@ int main(void)
 			zeroFlag = 0;
 		}
 		
-		zeroFlag = (zeroFlag&beqf)|((!zeroFlag)&bneqf);
+		bsel = (zeroFlag&beqf)|((!zeroFlag)&bneqf);
 		
 		/*PORTC = 0x00;*/
-		PORTA = dataOutputReg | (zeroFlag<<4);
+		PORTA = dataOutputReg | (bsel<<4);
 		//PORTC = 0xFF;
 		
 		

@@ -32,12 +32,13 @@ int main(void)
 	MCUCSR|=(1<<JTD);
 	MCUCSR|=(1<<JTD);
 	
-	int pc = 0x00;
+	unsigned int pc = 0x00;
 	int prevclk = 0;
 	int currclk = 0;
 	int jump = 0;
 	int reset = 0;
 	int bsel = 0;
+	unsigned int jmpby;
 	
 	/* Replace with your application code */
 	while (1) {
@@ -59,9 +60,11 @@ int main(void)
 				else{
 					pc++;
 					if(bsel==1){
-						int jmpby = ins%(1<<4);
+						jmpby = ins%16;
+						jmpby = jmpby & 15;
 						if(jmpby>=8) pc+=jmpby-16;
 						else pc+=jmpby;
+						//pc = 31;
 					}
 				}
 			}
