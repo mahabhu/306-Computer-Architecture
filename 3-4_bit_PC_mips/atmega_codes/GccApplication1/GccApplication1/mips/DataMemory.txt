@@ -1,0 +1,59 @@
+
+#include <avr/io.h>
+#define F_CPU 1000000
+#include <util/delay.h>
+
+unsigned char memArr[16];
+
+int main(void)
+{
+	MCUCSR|=(1<<JTD);
+	MCUCSR|=(1<<JTD);
+ 
+ 
+	DDRA=0XFF;
+	DDRB=0x00;
+	DDRC=0x00;
+	DDRD=0x00;
+	
+	int currclk = 0;
+	int prevclk = 0;
+	int mem2reg;
+	int memread;
+	int memwrite;
+	int writedata;
+	int addr;
+	int dataout;
+	
+	for(int i=0; i<16; i++){
+		memArr[i]=13;
+	}
+	
+    while (1) 
+    {
+		int b = PINB;
+		writedata = b>>4;
+		addr = b%16;
+		int d = PIND;
+		prevclk = currclk;
+		currclk = (d & 0b0001);
+		mem2reg = (d & 0b0010)>>1;
+		memread = (d & 0b0100)>>2;
+		memwrite = (d & 0b1000)>>3;
+		
+		dataout = memArr[addr];
+		
+		if(memread==1){
+			if(mem2reg==1) PORTA = dataout;
+			else PORTA = addr;
+		}
+		if(prevclk==0 && currclk==1 && memwrite==1){
+			memArr[addr] = writedata;
+		}
+		_delay_ms(10);
+		
+		
+    }
+}
+
+//DataMemoryUpdated
