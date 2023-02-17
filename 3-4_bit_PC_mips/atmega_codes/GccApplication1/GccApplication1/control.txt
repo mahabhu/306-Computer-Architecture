@@ -89,7 +89,7 @@ int main(void)
 
 		ctrlOUT1 = controlMem[operation]/256;
 		
-		PORTC = ctrlOUT1 & 0b00001111;
+		PORTC = (ctrlOUT1 & 0b00001111)|( (operation<<4) & 0b11110000);
 		//this will have the remaining 4 bits 
 
 		// combining PORTA and PORTC = mux selectors + ALUOP 

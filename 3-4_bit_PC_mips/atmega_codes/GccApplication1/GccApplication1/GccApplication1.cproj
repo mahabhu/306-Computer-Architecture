@@ -124,7 +124,13 @@
     <None Include="DataMemory.txt">
       <SubType>compile</SubType>
     </None>
+    <None Include="insMem02.txt">
+      <SubType>compile</SubType>
+    </None>
     <None Include="instructionMemory.txt">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="pcReg.txt">
       <SubType>compile</SubType>
     </None>
     <None Include="registerFile.txt">

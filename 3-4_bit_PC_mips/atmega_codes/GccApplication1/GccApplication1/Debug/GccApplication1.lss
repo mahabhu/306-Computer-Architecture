@@ -3,29 +3,31 @@ GccApplication1.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000214  00000000  00000000  00000054  2**1
+  0 .text         0000018e  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000000  00800060  00800060  00000268  2**0
+  1 .data         00000000  00800060  00800060  00000202  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .comment      00000030  00000000  00000000  00000268  2**0
+  2 .bss          00000010  00800060  00800060  00000202  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  00000202  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000298  2**2
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000234  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000020  00000000  00000000  000002d4  2**0
+  5 .debug_aranges 00000020  00000000  00000000  00000270  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   000006ce  00000000  00000000  000002f4  2**0
+  6 .debug_info   00000730  00000000  00000000  00000290  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000005ba  00000000  00000000  000009c2  2**0
+  7 .debug_abbrev 000005dd  00000000  00000000  000009c0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000367  00000000  00000000  00000f7c  2**0
+  8 .debug_line   0000030f  00000000  00000000  00000f9d  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000024  00000000  00000000  000012e4  2**2
+  9 .debug_frame  00000024  00000000  00000000  000012ac  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00000383  00000000  00000000  00001308  2**0
+ 10 .debug_str    00000378  00000000  00000000  000012d0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000198  00000000  00000000  0000168b  2**0
+ 11 .debug_loc    000001d4  00000000  00000000  00001648  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000010  00000000  00000000  00001823  2**0
+ 12 .debug_ranges 00000028  00000000  00000000  0000181c  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -71,18 +73,18 @@ Disassembly of section .text:
   68:	1d 92       	st	X+, r1
 
 0000006a <.do_clear_bss_start>:
-  6a:	a0 36       	cpi	r26, 0x60	; 96
+  6a:	a0 37       	cpi	r26, 0x70	; 112
   6c:	b2 07       	cpc	r27, r18
   6e:	e1 f7       	brne	.-8      	; 0x68 <.do_clear_bss_loop>
   70:	0e 94 3e 00 	call	0x7c	; 0x7c <main>
-  74:	0c 94 08 01 	jmp	0x210	; 0x210 <_exit>
+  74:	0c 94 c5 00 	jmp	0x18a	; 0x18a <_exit>
 
 00000078 <__bad_interrupt>:
   78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 0000007c <main>:
 
-unsigned char memArr[32];
+
 
 int main(void)
 {
@@ -94,7 +96,7 @@ int main(void)
   82:	84 b7       	in	r24, 0x34	; 52
   84:	80 68       	ori	r24, 0x80	; 128
   86:	84 bf       	out	0x34, r24	; 52
-	
+ 
 	
 	DDRA=0XFF;
   88:	8f ef       	ldi	r24, 0xFF	; 255
@@ -105,287 +107,193 @@ int main(void)
   8e:	14 ba       	out	0x14, r1	; 20
 	DDRD=0x00;
   90:	11 ba       	out	0x11, r1	; 17
-	// opc BH
-	// out CL
-	// zero A0
-
-
-	PORTA = 0b00000001;
-  92:	91 e0       	ldi	r25, 0x01	; 1
-  94:	9b bb       	out	0x1b, r25	; 27
-	PORTB = 0b11111111;
-  96:	88 bb       	out	0x18, r24	; 24
-	PORTD = 0b00001111;
-  98:	8f e0       	ldi	r24, 0x0F	; 15
-  9a:	82 bb       	out	0x12, r24	; 18
-	PORTC = 0b00001111;
-  9c:	85 bb       	out	0x15, r24	; 21
-
-	int reg1;
-	int reg2;
-	int operation;
-	int dataOutputReg = 0x00;
-  9e:	a0 e0       	ldi	r26, 0x00	; 0
-  a0:	b0 e0       	ldi	r27, 0x00	; 0
-	int beqf;
-	int bneqf;
-
-	while (1)
-	{
-		operation = PIND%16;
-  a2:	60 b3       	in	r22, 0x10	; 16
-  a4:	6f 70       	andi	r22, 0x0F	; 15
-  a6:	70 e0       	ldi	r23, 0x00	; 0
-		shamt = (PIND >> 4);
-  a8:	e0 b3       	in	r30, 0x10	; 16
-  aa:	e2 95       	swap	r30
-  ac:	ef 70       	andi	r30, 0x0F	; 15
-  ae:	f0 e0       	ldi	r31, 0x00	; 0
+	
+	for(int i=1; i<16; i++){
+  92:	81 e0       	ldi	r24, 0x01	; 1
+  94:	90 e0       	ldi	r25, 0x00	; 0
+  96:	07 c0       	rjmp	.+14     	; 0xa6 <main+0x2a>
+		regArr[i]=15-i;
+  98:	fc 01       	movw	r30, r24
+  9a:	e0 5a       	subi	r30, 0xA0	; 160
+  9c:	ff 4f       	sbci	r31, 0xFF	; 255
+  9e:	2f e0       	ldi	r18, 0x0F	; 15
+  a0:	28 1b       	sub	r18, r24
+  a2:	20 83       	st	Z, r18
+	DDRA=0XFF;
+	DDRB=0x00;
+	DDRC=0x00;
+	DDRD=0x00;
+	
+	for(int i=1; i<16; i++){
+  a4:	01 96       	adiw	r24, 0x01	; 1
+  a6:	80 31       	cpi	r24, 0x10	; 16
+  a8:	91 05       	cpc	r25, r1
+  aa:	b4 f3       	brlt	.-20     	; 0x98 <main+0x1c>
+  ac:	c0 e0       	ldi	r28, 0x00	; 0
+  ae:	d0 e0       	ldi	r29, 0x00	; 0
+	int reset;
+	int prevclk=0;
+ 
+    while (1) 
+    {
+		int b = PINB;
+  b0:	46 b3       	in	r20, 0x16	; 22
+  b2:	50 e0       	ldi	r21, 0x00	; 0
+		int muxout = b%16;
+  b4:	fa 01       	movw	r30, r20
+  b6:	ef 70       	andi	r30, 0x0F	; 15
+  b8:	f0 78       	andi	r31, 0x80	; 128
+  ba:	6f 01       	movw	r12, r30
+		int reg2 = b>>4;
+  bc:	55 95       	asr	r21
+  be:	47 95       	ror	r20
+  c0:	55 95       	asr	r21
+  c2:	47 95       	ror	r20
+  c4:	55 95       	asr	r21
+  c6:	47 95       	ror	r20
+  c8:	55 95       	asr	r21
+  ca:	47 95       	ror	r20
+		int d = PIND;
+  cc:	80 b3       	in	r24, 0x10	; 16
+  ce:	90 e0       	ldi	r25, 0x00	; 0
+		int reg1 = d%16;
+  d0:	8f 70       	andi	r24, 0x0F	; 15
+  d2:	90 78       	andi	r25, 0x80	; 128
+  d4:	9c 01       	movw	r18, r24
+		int flg = PINC;
+  d6:	83 b3       	in	r24, 0x13	; 19
+  d8:	e8 2e       	mov	r14, r24
+  da:	f1 2c       	mov	r15, r1
+		prevclk = currclk;
+		currclk = (flg & 0b0001);
+  dc:	a8 2f       	mov	r26, r24
+  de:	a1 70       	andi	r26, 0x01	; 1
+  e0:	b0 e0       	ldi	r27, 0x00	; 0
+		regwrite = (flg & 0b0010)>>1;
+  e2:	08 2f       	mov	r16, r24
+  e4:	02 70       	andi	r16, 0x02	; 2
+  e6:	10 e0       	ldi	r17, 0x00	; 0
+  e8:	15 95       	asr	r17
+  ea:	07 95       	ror	r16
+		showreg = (flg & 0b0100)>>2;
+		reset = (flg & 0b1000)>>3;
+  ec:	68 2f       	mov	r22, r24
+  ee:	68 70       	andi	r22, 0x08	; 8
+  f0:	70 e0       	ldi	r23, 0x00	; 0
+  f2:	75 95       	asr	r23
+  f4:	67 95       	ror	r22
+  f6:	75 95       	asr	r23
+  f8:	67 95       	ror	r22
+  fa:	75 95       	asr	r23
+  fc:	67 95       	ror	r22
+		int wb = flg>>4;
+  fe:	f5 94       	asr	r15
+ 100:	e7 94       	ror	r14
+ 102:	f5 94       	asr	r15
+ 104:	e7 94       	ror	r14
+ 106:	f5 94       	asr	r15
+ 108:	e7 94       	ror	r14
+ 10a:	f5 94       	asr	r15
+ 10c:	e7 94       	ror	r14
 		
-		reg1 = PINB%16;
-  b0:	26 b3       	in	r18, 0x16	; 22
-  b2:	2f 70       	andi	r18, 0x0F	; 15
-  b4:	30 e0       	ldi	r19, 0x00	; 0
-		reg2 =  (PINB >> 4);
-  b6:	46 b3       	in	r20, 0x16	; 22
-  b8:	42 95       	swap	r20
-  ba:	4f 70       	andi	r20, 0x0F	; 15
-  bc:	50 e0       	ldi	r21, 0x00	; 0
-		
-		int c = PINC;
-  be:	93 b3       	in	r25, 0x13	; 19
-		ALUsrc = (c & 0b0001);
-		beqf = (c & 0b0010)>>1;
-  c0:	09 2f       	mov	r16, r25
-  c2:	02 70       	andi	r16, 0x02	; 2
-  c4:	10 e0       	ldi	r17, 0x00	; 0
-  c6:	15 95       	asr	r17
-  c8:	07 95       	ror	r16
-		bneqf = (c & 0b0100)>>2;
-  ca:	c9 2f       	mov	r28, r25
-  cc:	c4 70       	andi	r28, 0x04	; 4
-  ce:	d0 e0       	ldi	r29, 0x00	; 0
-  d0:	d5 95       	asr	r29
-  d2:	c7 95       	ror	r28
-  d4:	d5 95       	asr	r29
-  d6:	c7 95       	ror	r28
-		
-		if(ALUsrc==1) reg2 = shamt;
-  d8:	90 fd       	sbrc	r25, 0
-  da:	af 01       	movw	r20, r30
-
-		if (operation == add || operation ==addi || operation == lw || operation == sw)
-  dc:	6d 30       	cpi	r22, 0x0D	; 13
-  de:	71 05       	cpc	r23, r1
-  e0:	49 f0       	breq	.+18     	; 0xf4 <main+0x78>
-  e2:	63 30       	cpi	r22, 0x03	; 3
-  e4:	71 05       	cpc	r23, r1
-  e6:	31 f0       	breq	.+12     	; 0xf4 <main+0x78>
-  e8:	65 30       	cpi	r22, 0x05	; 5
-  ea:	71 05       	cpc	r23, r1
-  ec:	19 f0       	breq	.+6      	; 0xf4 <main+0x78>
-  ee:	61 30       	cpi	r22, 0x01	; 1
-  f0:	71 05       	cpc	r23, r1
-  f2:	71 f4       	brne	.+28     	; 0x110 <main+0x94>
-		{
-			dataOutputReg = (reg1 + reg2)%16;
-  f4:	24 0f       	add	r18, r20
-  f6:	35 1f       	adc	r19, r21
-  f8:	2f 70       	andi	r18, 0x0F	; 15
-  fa:	30 78       	andi	r19, 0x80	; 128
-  fc:	33 23       	and	r19, r19
-  fe:	34 f4       	brge	.+12     	; 0x10c <main+0x90>
- 100:	21 50       	subi	r18, 0x01	; 1
- 102:	31 09       	sbc	r19, r1
- 104:	20 6f       	ori	r18, 0xF0	; 240
- 106:	3f 6f       	ori	r19, 0xFF	; 255
- 108:	2f 5f       	subi	r18, 0xFF	; 255
- 10a:	3f 4f       	sbci	r19, 0xFF	; 255
- 10c:	d9 01       	movw	r26, r18
- 10e:	5a c0       	rjmp	.+180    	; 0x1c4 <main+0x148>
+		if(showreg==1){
+ 10e:	82 ff       	sbrs	r24, 2
+ 110:	09 c0       	rjmp	.+18     	; 0x124 <main+0xa8>
+			int in1 = PIND>>4;
+ 112:	e0 b3       	in	r30, 0x10	; 16
+ 114:	e2 95       	swap	r30
+ 116:	ef 70       	andi	r30, 0x0F	; 15
+ 118:	f0 e0       	ldi	r31, 0x00	; 0
+			PORTA = regArr[in1];
+ 11a:	e0 5a       	subi	r30, 0xA0	; 160
+ 11c:	ff 4f       	sbci	r31, 0xFF	; 255
+ 11e:	80 81       	ld	r24, Z
+ 120:	8b bb       	out	0x1b, r24	; 27
+ 122:	2b c0       	rjmp	.+86     	; 0x17a <main+0xfe>
 		}
-		else if (operation == sub || operation == subi || operation == beq || operation == bneq)
- 110:	6e 30       	cpi	r22, 0x0E	; 14
- 112:	71 05       	cpc	r23, r1
- 114:	49 f0       	breq	.+18     	; 0x128 <main+0xac>
- 116:	64 30       	cpi	r22, 0x04	; 4
- 118:	71 05       	cpc	r23, r1
- 11a:	31 f0       	breq	.+12     	; 0x128 <main+0xac>
- 11c:	6c 30       	cpi	r22, 0x0C	; 12
- 11e:	71 05       	cpc	r23, r1
- 120:	19 f0       	breq	.+6      	; 0x128 <main+0xac>
- 122:	6a 30       	cpi	r22, 0x0A	; 10
- 124:	71 05       	cpc	r23, r1
- 126:	81 f4       	brne	.+32     	; 0x148 <main+0xcc>
-		{
-			dataOutputReg = (reg1 - reg2 +16 )%16;
- 128:	24 1b       	sub	r18, r20
- 12a:	35 0b       	sbc	r19, r21
- 12c:	20 5f       	subi	r18, 0xF0	; 240
- 12e:	3f 4f       	sbci	r19, 0xFF	; 255
- 130:	2f 70       	andi	r18, 0x0F	; 15
- 132:	30 78       	andi	r19, 0x80	; 128
- 134:	33 23       	and	r19, r19
- 136:	34 f4       	brge	.+12     	; 0x144 <main+0xc8>
- 138:	21 50       	subi	r18, 0x01	; 1
- 13a:	31 09       	sbc	r19, r1
- 13c:	20 6f       	ori	r18, 0xF0	; 240
- 13e:	3f 6f       	ori	r19, 0xFF	; 255
- 140:	2f 5f       	subi	r18, 0xFF	; 255
- 142:	3f 4f       	sbci	r19, 0xFF	; 255
- 144:	d9 01       	movw	r26, r18
- 146:	3e c0       	rjmp	.+124    	; 0x1c4 <main+0x148>
-			
+		else{
+			if(reset==1){
+ 124:	61 30       	cpi	r22, 0x01	; 1
+ 126:	71 05       	cpc	r23, r1
+ 128:	69 f4       	brne	.+26     	; 0x144 <main+0xc8>
+ 12a:	06 c0       	rjmp	.+12     	; 0x138 <main+0xbc>
+				for(int i=0; i<16; i++){
+					regArr[i]=0;
+ 12c:	fc 01       	movw	r30, r24
+ 12e:	e0 5a       	subi	r30, 0xA0	; 160
+ 130:	ff 4f       	sbci	r31, 0xFF	; 255
+ 132:	10 82       	st	Z, r1
+			int in1 = PIND>>4;
+			PORTA = regArr[in1];
 		}
-		else if (operation == and || operation == andi)
- 148:	6b 30       	cpi	r22, 0x0B	; 11
- 14a:	71 05       	cpc	r23, r1
- 14c:	19 f0       	breq	.+6      	; 0x154 <main+0xd8>
- 14e:	62 30       	cpi	r22, 0x02	; 2
- 150:	71 05       	cpc	r23, r1
- 152:	21 f4       	brne	.+8      	; 0x15c <main+0xe0>
-		{
-			dataOutputReg = reg1 & reg2;
- 154:	da 01       	movw	r26, r20
- 156:	a2 23       	and	r26, r18
- 158:	b3 23       	and	r27, r19
- 15a:	34 c0       	rjmp	.+104    	; 0x1c4 <main+0x148>
-		}
-		else if (operation == or || operation == ori)
- 15c:	cb 01       	movw	r24, r22
- 15e:	07 97       	sbiw	r24, 0x07	; 7
- 160:	02 97       	sbiw	r24, 0x02	; 2
- 162:	20 f4       	brcc	.+8      	; 0x16c <main+0xf0>
-		{
-			dataOutputReg = reg1 | reg2;
- 164:	da 01       	movw	r26, r20
- 166:	a2 2b       	or	r26, r18
- 168:	b3 2b       	or	r27, r19
- 16a:	2c c0       	rjmp	.+88     	; 0x1c4 <main+0x148>
-		}
-		else if (operation == nor)
- 16c:	6f 30       	cpi	r22, 0x0F	; 15
- 16e:	71 05       	cpc	r23, r1
- 170:	31 f4       	brne	.+12     	; 0x17e <main+0x102>
-		{
-			dataOutputReg = reg1 | reg2;
- 172:	24 2b       	or	r18, r20
- 174:	35 2b       	or	r19, r21
-			dataOutputReg = (dataOutputReg ^ 15);
- 176:	d9 01       	movw	r26, r18
- 178:	8f e0       	ldi	r24, 0x0F	; 15
- 17a:	a8 27       	eor	r26, r24
- 17c:	23 c0       	rjmp	.+70     	; 0x1c4 <main+0x148>
-		}
-		else if (operation == sll)
- 17e:	66 30       	cpi	r22, 0x06	; 6
- 180:	71 05       	cpc	r23, r1
- 182:	89 f4       	brne	.+34     	; 0x1a6 <main+0x12a>
-		{
-			dataOutputReg = reg1 << reg2;
- 184:	02 c0       	rjmp	.+4      	; 0x18a <main+0x10e>
- 186:	22 0f       	add	r18, r18
- 188:	33 1f       	adc	r19, r19
- 18a:	4a 95       	dec	r20
- 18c:	e2 f7       	brpl	.-8      	; 0x186 <main+0x10a>
-			dataOutputReg%=16;
- 18e:	2f 70       	andi	r18, 0x0F	; 15
- 190:	30 78       	andi	r19, 0x80	; 128
- 192:	33 23       	and	r19, r19
- 194:	34 f4       	brge	.+12     	; 0x1a2 <main+0x126>
- 196:	21 50       	subi	r18, 0x01	; 1
- 198:	31 09       	sbc	r19, r1
- 19a:	20 6f       	ori	r18, 0xF0	; 240
- 19c:	3f 6f       	ori	r19, 0xFF	; 255
- 19e:	2f 5f       	subi	r18, 0xFF	; 255
- 1a0:	3f 4f       	sbci	r19, 0xFF	; 255
- 1a2:	d9 01       	movw	r26, r18
- 1a4:	0f c0       	rjmp	.+30     	; 0x1c4 <main+0x148>
-		}
-		else if (operation == srl)
- 1a6:	61 15       	cp	r22, r1
- 1a8:	71 05       	cpc	r23, r1
- 1aa:	39 f4       	brne	.+14     	; 0x1ba <main+0x13e>
-		{
-			dataOutputReg = reg1 >> reg2;
- 1ac:	d9 01       	movw	r26, r18
- 1ae:	02 c0       	rjmp	.+4      	; 0x1b4 <main+0x138>
- 1b0:	b5 95       	asr	r27
- 1b2:	a7 95       	ror	r26
- 1b4:	4a 95       	dec	r20
- 1b6:	e2 f7       	brpl	.-8      	; 0x1b0 <main+0x134>
- 1b8:	05 c0       	rjmp	.+10     	; 0x1c4 <main+0x148>
-		}
-		else if (operation == j)
- 1ba:	69 30       	cpi	r22, 0x09	; 9
- 1bc:	71 05       	cpc	r23, r1
- 1be:	11 f4       	brne	.+4      	; 0x1c4 <main+0x148>
-		{
-			dataOutputReg = 0;
- 1c0:	a0 e0       	ldi	r26, 0x00	; 0
- 1c2:	b0 e0       	ldi	r27, 0x00	; 0
-		}
-
-		if (dataOutputReg%16 == 0)
- 1c4:	cd 01       	movw	r24, r26
- 1c6:	8f 70       	andi	r24, 0x0F	; 15
- 1c8:	99 27       	eor	r25, r25
- 1ca:	89 2b       	or	r24, r25
- 1cc:	19 f4       	brne	.+6      	; 0x1d4 <main+0x158>
-		{
-			zeroFlag = 1;
- 1ce:	41 e0       	ldi	r20, 0x01	; 1
- 1d0:	50 e0       	ldi	r21, 0x00	; 0
- 1d2:	02 c0       	rjmp	.+4      	; 0x1d8 <main+0x15c>
-		}
-		else
-		{
-			zeroFlag = 0;
- 1d4:	40 e0       	ldi	r20, 0x00	; 0
- 1d6:	50 e0       	ldi	r21, 0x00	; 0
-		}
-		
-		zeroFlag = (zeroFlag&beqf)|((!zeroFlag)&bneqf);
- 1d8:	9a 01       	movw	r18, r20
- 1da:	20 23       	and	r18, r16
- 1dc:	31 23       	and	r19, r17
- 1de:	81 e0       	ldi	r24, 0x01	; 1
- 1e0:	90 e0       	ldi	r25, 0x00	; 0
- 1e2:	45 2b       	or	r20, r21
- 1e4:	11 f0       	breq	.+4      	; 0x1ea <main+0x16e>
- 1e6:	80 e0       	ldi	r24, 0x00	; 0
- 1e8:	90 e0       	ldi	r25, 0x00	; 0
- 1ea:	8c 23       	and	r24, r28
- 1ec:	9d 23       	and	r25, r29
- 1ee:	82 2b       	or	r24, r18
- 1f0:	93 2b       	or	r25, r19
-		
-		/*PORTC = 0x00;*/
-		PORTA = dataOutputReg | (zeroFlag<<4);
- 1f2:	82 95       	swap	r24
- 1f4:	92 95       	swap	r25
- 1f6:	90 7f       	andi	r25, 0xF0	; 240
- 1f8:	98 27       	eor	r25, r24
- 1fa:	80 7f       	andi	r24, 0xF0	; 240
- 1fc:	98 27       	eor	r25, r24
- 1fe:	8a 2b       	or	r24, r26
- 200:	8b bb       	out	0x1b, r24	; 27
+		else{
+			if(reset==1){
+				for(int i=0; i<16; i++){
+ 134:	01 96       	adiw	r24, 0x01	; 1
+ 136:	02 c0       	rjmp	.+4      	; 0x13c <main+0xc0>
+ 138:	80 e0       	ldi	r24, 0x00	; 0
+ 13a:	90 e0       	ldi	r25, 0x00	; 0
+ 13c:	80 31       	cpi	r24, 0x10	; 16
+ 13e:	91 05       	cpc	r25, r1
+ 140:	ac f3       	brlt	.-22     	; 0x12c <main+0xb0>
+ 142:	1b c0       	rjmp	.+54     	; 0x17a <main+0xfe>
+					regArr[i]=0;
+				}
+			}
+			else{
+				PORTA = ( (regArr[reg2]<< 4) | regArr[reg1]%16)%256;
+ 144:	40 5a       	subi	r20, 0xA0	; 160
+ 146:	5f 4f       	sbci	r21, 0xFF	; 255
+ 148:	fa 01       	movw	r30, r20
+ 14a:	80 81       	ld	r24, Z
+ 14c:	f0 e1       	ldi	r31, 0x10	; 16
+ 14e:	8f 9f       	mul	r24, r31
+ 150:	c0 01       	movw	r24, r0
+ 152:	11 24       	eor	r1, r1
+ 154:	20 5a       	subi	r18, 0xA0	; 160
+ 156:	3f 4f       	sbci	r19, 0xFF	; 255
+ 158:	f9 01       	movw	r30, r18
+ 15a:	20 81       	ld	r18, Z
+ 15c:	2f 70       	andi	r18, 0x0F	; 15
+ 15e:	82 2b       	or	r24, r18
+ 160:	90 78       	andi	r25, 0x80	; 128
+ 162:	8b bb       	out	0x1b, r24	; 27
+				if(prevclk==0 && currclk == 1 && regwrite){
+ 164:	cd 2b       	or	r28, r29
+ 166:	49 f4       	brne	.+18     	; 0x17a <main+0xfe>
+ 168:	a1 30       	cpi	r26, 0x01	; 1
+ 16a:	b1 05       	cpc	r27, r1
+ 16c:	31 f4       	brne	.+12     	; 0x17a <main+0xfe>
+ 16e:	01 2b       	or	r16, r17
+ 170:	21 f0       	breq	.+8      	; 0x17a <main+0xfe>
+					regArr[muxout] = wb;
+ 172:	f6 01       	movw	r30, r12
+ 174:	e0 5a       	subi	r30, 0xA0	; 160
+ 176:	ff 4f       	sbci	r31, 0xFF	; 255
+ 178:	e0 82       	st	Z, r14
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 202:	83 ec       	ldi	r24, 0xC3	; 195
- 204:	99 e0       	ldi	r25, 0x09	; 9
- 206:	01 97       	sbiw	r24, 0x01	; 1
- 208:	f1 f7       	brne	.-4      	; 0x206 <main+0x18a>
- 20a:	00 c0       	rjmp	.+0      	; 0x20c <main+0x190>
- 20c:	00 00       	nop
- 20e:	49 cf       	rjmp	.-366    	; 0xa2 <main+0x26>
+ 17a:	83 ec       	ldi	r24, 0xC3	; 195
+ 17c:	99 e0       	ldi	r25, 0x09	; 9
+ 17e:	01 97       	sbiw	r24, 0x01	; 1
+ 180:	f1 f7       	brne	.-4      	; 0x17e <main+0x102>
+ 182:	00 c0       	rjmp	.+0      	; 0x184 <main+0x108>
+ 184:	00 00       	nop
+		int reg2 = b>>4;
+		int d = PIND;
+		int reg1 = d%16;
+		int flg = PINC;
+		prevclk = currclk;
+		currclk = (flg & 0b0001);
+ 186:	ed 01       	movw	r28, r26
+ 188:	93 cf       	rjmp	.-218    	; 0xb0 <main+0x34>
 
-00000210 <_exit>:
- 210:	f8 94       	cli
+0000018a <_exit>:
+ 18a:	f8 94       	cli
 
-00000212 <__stop_program>:
- 212:	ff cf       	rjmp	.-2      	; 0x212 <__stop_program>
+0000018c <__stop_program>:
+ 18c:	ff cf       	rjmp	.-2      	; 0x18c <__stop_program>

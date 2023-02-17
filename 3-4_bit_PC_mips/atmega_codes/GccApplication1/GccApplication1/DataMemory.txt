@@ -14,11 +14,10 @@ int main(void)
 	DDRA=0XFF;
 	DDRB=0x00;
 	DDRC=0x00;
-	DDRD=0x00;
+	DDRD=0x0F;
 	
 	int currclk = 0;
 	int prevclk = 0;
-	int mem2reg;
 	int memread;
 	int memwrite;
 	int writedata;
@@ -38,15 +37,16 @@ int main(void)
 		addr = b%16;
 		d = PIND;
 		prevclk = currclk;
-		currclk = (d & 0b0001);
-		mem2reg = (d & 0b0010)>>1;
-		memread = (d & 0b0100)>>2;
-		memwrite = (d & 0b1000)>>3;
+		currclk = (d & 0b01000000)>>6;
+		memread = (d & 0b00100000)>>5;
+		memwrite= (d & 0b00010000)>>4;
 		
 		dataout = memArr[addr];
 		
-		if(mem2reg==1) PORTA = dataout;
-		else PORTA = addr;
+		//if(mem2reg==1) PORTA = dataout;
+		//else PORTA = addr;
+		
+		PORTD = (dataout & 0b00001111);
 		
 		if(prevclk==0 && currclk==1 && memwrite==1){
 			memArr[addr] = writedata;
