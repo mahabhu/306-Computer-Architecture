@@ -3,57 +3,55 @@ GccApplication1.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         0000018e  00000000  00000000  00000074  2**1
+  0 .text         000000e0  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000000  00800060  00800060  00000202  2**0
+  1 .data         00000200  00800060  000000e0  00000154  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          00000010  00800060  00800060  00000202  2**0
-                  ALLOC
-  3 .comment      00000030  00000000  00000000  00000202  2**0
+  2 .comment      00000030  00000000  00000000  00000354  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000234  2**2
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000384  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000020  00000000  00000000  00000270  2**0
+  4 .debug_aranges 00000020  00000000  00000000  000003c0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000730  00000000  00000000  00000290  2**0
+  5 .debug_info   0000065d  00000000  00000000  000003e0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000005dd  00000000  00000000  000009c0  2**0
+  6 .debug_abbrev 000005ab  00000000  00000000  00000a3d  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   0000030f  00000000  00000000  00000f9d  2**0
+  7 .debug_line   0000028c  00000000  00000000  00000fe8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000024  00000000  00000000  000012ac  2**2
+  8 .debug_frame  00000024  00000000  00000000  00001274  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000378  00000000  00000000  000012d0  2**0
+  9 .debug_str    0000037f  00000000  00000000  00001298  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000001d4  00000000  00000000  00001648  2**0
+ 10 .debug_loc    000000c7  00000000  00000000  00001617  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000028  00000000  00000000  0000181c  2**0
+ 11 .debug_ranges 00000010  00000000  00000000  000016de  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
 
 00000000 <__vectors>:
    0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
-   4:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-   8:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-   c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  10:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  14:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  18:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  1c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  20:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  24:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  28:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  2c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  30:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  34:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  38:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  3c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  40:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  44:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  48:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  4c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
-  50:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   4:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   8:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  10:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  14:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  18:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  1c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  20:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  24:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  28:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  2c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  30:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  34:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  38:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  3c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  40:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  44:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  48:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  4c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  50:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
 
 00000054 <__ctors_end>:
   54:	11 24       	eor	r1, r1
@@ -63,237 +61,121 @@ Disassembly of section .text:
   5c:	de bf       	out	0x3e, r29	; 62
   5e:	cd bf       	out	0x3d, r28	; 61
 
-00000060 <__do_clear_bss>:
-  60:	20 e0       	ldi	r18, 0x00	; 0
+00000060 <__do_copy_data>:
+  60:	12 e0       	ldi	r17, 0x02	; 2
   62:	a0 e6       	ldi	r26, 0x60	; 96
   64:	b0 e0       	ldi	r27, 0x00	; 0
-  66:	01 c0       	rjmp	.+2      	; 0x6a <.do_clear_bss_start>
+  66:	e0 ee       	ldi	r30, 0xE0	; 224
+  68:	f0 e0       	ldi	r31, 0x00	; 0
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	a0 36       	cpi	r26, 0x60	; 96
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+  76:	0e 94 41 00 	call	0x82	; 0x82 <main>
+  7a:	0c 94 6e 00 	jmp	0xdc	; 0xdc <_exit>
 
-00000068 <.do_clear_bss_loop>:
-  68:	1d 92       	st	X+, r1
+0000007e <__bad_interrupt>:
+  7e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
-0000006a <.do_clear_bss_start>:
-  6a:	a0 37       	cpi	r26, 0x70	; 112
-  6c:	b2 07       	cpc	r27, r18
-  6e:	e1 f7       	brne	.-8      	; 0x68 <.do_clear_bss_loop>
-  70:	0e 94 3e 00 	call	0x7c	; 0x7c <main>
-  74:	0c 94 c5 00 	jmp	0x18a	; 0x18a <_exit>
-
-00000078 <__bad_interrupt>:
-  78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
-
-0000007c <main>:
+00000082 <main>:
 
 
 
 int main(void)
 {
-	MCUCSR|=(1<<JTD);
-  7c:	84 b7       	in	r24, 0x34	; 52
-  7e:	80 68       	ori	r24, 0x80	; 128
-  80:	84 bf       	out	0x34, r24	; 52
-	MCUCSR|=(1<<JTD);
-  82:	84 b7       	in	r24, 0x34	; 52
-  84:	80 68       	ori	r24, 0x80	; 128
-  86:	84 bf       	out	0x34, r24	; 52
- 
-	
 	DDRA=0XFF;
-  88:	8f ef       	ldi	r24, 0xFF	; 255
-  8a:	8a bb       	out	0x1a, r24	; 26
+  82:	8f ef       	ldi	r24, 0xFF	; 255
+  84:	8a bb       	out	0x1a, r24	; 26
 	DDRB=0x00;
-  8c:	17 ba       	out	0x17, r1	; 23
-	DDRC=0x00;
-  8e:	14 ba       	out	0x14, r1	; 20
-	DDRD=0x00;
-  90:	11 ba       	out	0x11, r1	; 17
+  86:	17 ba       	out	0x17, r1	; 23
+	DDRC=0xFF;
+  88:	84 bb       	out	0x14, r24	; 20
+	DDRD=0xFF;
+  8a:	81 bb       	out	0x11, r24	; 17
 	
-	for(int i=1; i<16; i++){
-  92:	81 e0       	ldi	r24, 0x01	; 1
-  94:	90 e0       	ldi	r25, 0x00	; 0
-  96:	07 c0       	rjmp	.+14     	; 0xa6 <main+0x2a>
-		regArr[i]=15-i;
-  98:	fc 01       	movw	r30, r24
-  9a:	e0 5a       	subi	r30, 0xA0	; 160
-  9c:	ff 4f       	sbci	r31, 0xFF	; 255
-  9e:	2f e0       	ldi	r18, 0x0F	; 15
-  a0:	28 1b       	sub	r18, r24
-  a2:	20 83       	st	Z, r18
-	DDRA=0XFF;
-	DDRB=0x00;
-	DDRC=0x00;
-	DDRD=0x00;
+	MCUCSR|=(1<<JTD);
+  8c:	84 b7       	in	r24, 0x34	; 52
+  8e:	80 68       	ori	r24, 0x80	; 128
+  90:	84 bf       	out	0x34, r24	; 52
+	MCUCSR|=(1<<JTD);
+  92:	84 b7       	in	r24, 0x34	; 52
+  94:	80 68       	ori	r24, 0x80	; 128
+  96:	84 bf       	out	0x34, r24	; 52
 	
-	for(int i=1; i<16; i++){
-  a4:	01 96       	adiw	r24, 0x01	; 1
-  a6:	80 31       	cpi	r24, 0x10	; 16
-  a8:	91 05       	cpc	r25, r1
-  aa:	b4 f3       	brlt	.-20     	; 0x98 <main+0x1c>
-  ac:	c0 e0       	ldi	r28, 0x00	; 0
-  ae:	d0 e0       	ldi	r29, 0x00	; 0
-	int reset;
-	int prevclk=0;
- 
-    while (1) 
-    {
-		int b = PINB;
-  b0:	46 b3       	in	r20, 0x16	; 22
-  b2:	50 e0       	ldi	r21, 0x00	; 0
-		int muxout = b%16;
-  b4:	fa 01       	movw	r30, r20
-  b6:	ef 70       	andi	r30, 0x0F	; 15
-  b8:	f0 78       	andi	r31, 0x80	; 128
-  ba:	6f 01       	movw	r12, r30
-		int reg2 = b>>4;
-  bc:	55 95       	asr	r21
-  be:	47 95       	ror	r20
-  c0:	55 95       	asr	r21
-  c2:	47 95       	ror	r20
-  c4:	55 95       	asr	r21
-  c6:	47 95       	ror	r20
-  c8:	55 95       	asr	r21
-  ca:	47 95       	ror	r20
-		int d = PIND;
-  cc:	80 b3       	in	r24, 0x10	; 16
-  ce:	90 e0       	ldi	r25, 0x00	; 0
-		int reg1 = d%16;
-  d0:	8f 70       	andi	r24, 0x0F	; 15
-  d2:	90 78       	andi	r25, 0x80	; 128
-  d4:	9c 01       	movw	r18, r24
-		int flg = PINC;
-  d6:	83 b3       	in	r24, 0x13	; 19
-  d8:	e8 2e       	mov	r14, r24
-  da:	f1 2c       	mov	r15, r1
-		prevclk = currclk;
-		currclk = (flg & 0b0001);
-  dc:	a8 2f       	mov	r26, r24
-  de:	a1 70       	andi	r26, 0x01	; 1
-  e0:	b0 e0       	ldi	r27, 0x00	; 0
-		regwrite = (flg & 0b0010)>>1;
-  e2:	08 2f       	mov	r16, r24
-  e4:	02 70       	andi	r16, 0x02	; 2
-  e6:	10 e0       	ldi	r17, 0x00	; 0
-  e8:	15 95       	asr	r17
-  ea:	07 95       	ror	r16
-		showreg = (flg & 0b0100)>>2;
-		reset = (flg & 0b1000)>>3;
-  ec:	68 2f       	mov	r22, r24
-  ee:	68 70       	andi	r22, 0x08	; 8
-  f0:	70 e0       	ldi	r23, 0x00	; 0
-  f2:	75 95       	asr	r23
-  f4:	67 95       	ror	r22
-  f6:	75 95       	asr	r23
-  f8:	67 95       	ror	r22
-  fa:	75 95       	asr	r23
-  fc:	67 95       	ror	r22
-		int wb = flg>>4;
-  fe:	f5 94       	asr	r15
- 100:	e7 94       	ror	r14
- 102:	f5 94       	asr	r15
- 104:	e7 94       	ror	r14
- 106:	f5 94       	asr	r15
- 108:	e7 94       	ror	r14
- 10a:	f5 94       	asr	r15
- 10c:	e7 94       	ror	r14
-		
-		if(showreg==1){
- 10e:	82 ff       	sbrs	r24, 2
- 110:	09 c0       	rjmp	.+18     	; 0x124 <main+0xa8>
-			int in1 = PIND>>4;
- 112:	e0 b3       	in	r30, 0x10	; 16
- 114:	e2 95       	swap	r30
- 116:	ef 70       	andi	r30, 0x0F	; 15
- 118:	f0 e0       	ldi	r31, 0x00	; 0
-			PORTA = regArr[in1];
- 11a:	e0 5a       	subi	r30, 0xA0	; 160
- 11c:	ff 4f       	sbci	r31, 0xFF	; 255
- 11e:	80 81       	ld	r24, Z
- 120:	8b bb       	out	0x1b, r24	; 27
- 122:	2b c0       	rjmp	.+86     	; 0x17a <main+0xfe>
-		}
-		else{
-			if(reset==1){
- 124:	61 30       	cpi	r22, 0x01	; 1
- 126:	71 05       	cpc	r23, r1
- 128:	69 f4       	brne	.+26     	; 0x144 <main+0xc8>
- 12a:	06 c0       	rjmp	.+12     	; 0x138 <main+0xbc>
-				for(int i=0; i<16; i++){
-					regArr[i]=0;
- 12c:	fc 01       	movw	r30, r24
- 12e:	e0 5a       	subi	r30, 0xA0	; 160
- 130:	ff 4f       	sbci	r31, 0xFF	; 255
- 132:	10 82       	st	Z, r1
-			int in1 = PIND>>4;
-			PORTA = regArr[in1];
-		}
-		else{
-			if(reset==1){
-				for(int i=0; i<16; i++){
- 134:	01 96       	adiw	r24, 0x01	; 1
- 136:	02 c0       	rjmp	.+4      	; 0x13c <main+0xc0>
- 138:	80 e0       	ldi	r24, 0x00	; 0
- 13a:	90 e0       	ldi	r25, 0x00	; 0
- 13c:	80 31       	cpi	r24, 0x10	; 16
- 13e:	91 05       	cpc	r25, r1
- 140:	ac f3       	brlt	.-22     	; 0x12c <main+0xb0>
- 142:	1b c0       	rjmp	.+54     	; 0x17a <main+0xfe>
-					regArr[i]=0;
-				}
-			}
-			else{
-				PORTA = ( (regArr[reg2]<< 4) | regArr[reg1]%16)%256;
- 144:	40 5a       	subi	r20, 0xA0	; 160
- 146:	5f 4f       	sbci	r21, 0xFF	; 255
- 148:	fa 01       	movw	r30, r20
- 14a:	80 81       	ld	r24, Z
- 14c:	f0 e1       	ldi	r31, 0x10	; 16
- 14e:	8f 9f       	mul	r24, r31
- 150:	c0 01       	movw	r24, r0
- 152:	11 24       	eor	r1, r1
- 154:	20 5a       	subi	r18, 0xA0	; 160
- 156:	3f 4f       	sbci	r19, 0xFF	; 255
- 158:	f9 01       	movw	r30, r18
- 15a:	20 81       	ld	r18, Z
- 15c:	2f 70       	andi	r18, 0x0F	; 15
- 15e:	82 2b       	or	r24, r18
- 160:	90 78       	andi	r25, 0x80	; 128
- 162:	8b bb       	out	0x1b, r24	; 27
-				if(prevclk==0 && currclk == 1 && regwrite){
- 164:	cd 2b       	or	r28, r29
- 166:	49 f4       	brne	.+18     	; 0x17a <main+0xfe>
- 168:	a1 30       	cpi	r26, 0x01	; 1
- 16a:	b1 05       	cpc	r27, r1
- 16c:	31 f4       	brne	.+12     	; 0x17a <main+0xfe>
- 16e:	01 2b       	or	r16, r17
- 170:	21 f0       	breq	.+8      	; 0x17a <main+0xfe>
-					regArr[muxout] = wb;
- 172:	f6 01       	movw	r30, r12
- 174:	e0 5a       	subi	r30, 0xA0	; 160
- 176:	ff 4f       	sbci	r31, 0xFF	; 255
- 178:	e0 82       	st	Z, r14
+	unsigned int pc = 0x00;
+	int clkcnt = 0;
+	int g = 0;
+  98:	40 e0       	ldi	r20, 0x00	; 0
+  9a:	50 e0       	ldi	r21, 0x00	; 0
+	
+	MCUCSR|=(1<<JTD);
+	MCUCSR|=(1<<JTD);
+	
+	unsigned int pc = 0x00;
+	int clkcnt = 0;
+  9c:	80 e0       	ldi	r24, 0x00	; 0
+  9e:	90 e0       	ldi	r25, 0x00	; 0
+	int g = 0;
+	/* Replace with your application code */
+	while (1) {
+		unsigned char c ;
+		pc = PINB;
+  a0:	e6 b3       	in	r30, 0x16	; 22
+  a2:	f0 e0       	ldi	r31, 0x00	; 0
+		c = (instruction[pc]%(1<<8))&(0xff);
+  a4:	ee 0f       	add	r30, r30
+  a6:	ff 1f       	adc	r31, r31
+  a8:	e0 5a       	subi	r30, 0xA0	; 160
+  aa:	ff 4f       	sbci	r31, 0xFF	; 255
+  ac:	20 81       	ld	r18, Z
+		PORTA = c;
+  ae:	2b bb       	out	0x1b, r18	; 27
+		c = ((instruction[pc])>>8)&(0xff);
+  b0:	21 81       	ldd	r18, Z+1	; 0x01
+		PORTC = c;
+  b2:	25 bb       	out	0x15, r18	; 21
+		clkcnt++;
+  b4:	01 96       	adiw	r24, 0x01	; 1
+		if(clkcnt==100){
+  b6:	84 36       	cpi	r24, 0x64	; 100
+  b8:	91 05       	cpc	r25, r1
+  ba:	49 f4       	brne	.+18     	; 0xce <main+0x4c>
+			clkcnt = 0;
+			g = (1<<7) - g;
+  bc:	80 e8       	ldi	r24, 0x80	; 128
+  be:	90 e0       	ldi	r25, 0x00	; 0
+  c0:	9c 01       	movw	r18, r24
+  c2:	24 1b       	sub	r18, r20
+  c4:	35 0b       	sbc	r19, r21
+  c6:	a9 01       	movw	r20, r18
+			PORTD = g;
+  c8:	22 bb       	out	0x12, r18	; 18
+		PORTA = c;
+		c = ((instruction[pc])>>8)&(0xff);
+		PORTC = c;
+		clkcnt++;
+		if(clkcnt==100){
+			clkcnt = 0;
+  ca:	80 e0       	ldi	r24, 0x00	; 0
+  cc:	90 e0       	ldi	r25, 0x00	; 0
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 17a:	83 ec       	ldi	r24, 0xC3	; 195
- 17c:	99 e0       	ldi	r25, 0x09	; 9
- 17e:	01 97       	sbiw	r24, 0x01	; 1
- 180:	f1 f7       	brne	.-4      	; 0x17e <main+0x102>
- 182:	00 c0       	rjmp	.+0      	; 0x184 <main+0x108>
- 184:	00 00       	nop
-		int reg2 = b>>4;
-		int d = PIND;
-		int reg1 = d%16;
-		int flg = PINC;
-		prevclk = currclk;
-		currclk = (flg & 0b0001);
- 186:	ed 01       	movw	r28, r26
- 188:	93 cf       	rjmp	.-218    	; 0xb0 <main+0x34>
+  ce:	e3 ec       	ldi	r30, 0xC3	; 195
+  d0:	f9 e0       	ldi	r31, 0x09	; 9
+  d2:	31 97       	sbiw	r30, 0x01	; 1
+  d4:	f1 f7       	brne	.-4      	; 0xd2 <main+0x50>
+  d6:	00 c0       	rjmp	.+0      	; 0xd8 <main+0x56>
+  d8:	00 00       	nop
+  da:	e2 cf       	rjmp	.-60     	; 0xa0 <main+0x1e>
 
-0000018a <_exit>:
- 18a:	f8 94       	cli
+000000dc <_exit>:
+  dc:	f8 94       	cli
 
-0000018c <__stop_program>:
- 18c:	ff cf       	rjmp	.-2      	; 0x18c <__stop_program>
+000000de <__stop_program>:
+  de:	ff cf       	rjmp	.-2      	; 0xde <__stop_program>

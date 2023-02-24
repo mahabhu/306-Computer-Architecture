@@ -1,6 +1,19 @@
-addi $t0, $zero, 8
-addi $t3, $zero, 8
-addi $t2, $zero, 6
-sw $t3, 0($t0)
-addi $t3, $zero, 5
-lw $t3, 2($t2)
+st:	addi $t0, $zero, 14
+	addi $t1, $zero, 13
+	addi $t2, $zero, 0
+	addi $t3, $zero, 0
+	addi $t4, $zero, 0
+L0:	beq $t1, $zero, end
+	addi $t3, $zero, 15
+	sub $t3, $t3, $t0
+	addi $t3, $t3, 1
+	sub $t3, $t2, $t3
+	andi $t3, $t3, 8
+	bneq $t3, $zero, L1
+	addi $t4, $t4, 1
+L1:	add $t2, $t2, $t0
+	subi $t1, $t1, 1
+	j L0
+end:	add $t0, $t2, $zero
+	add $t1, $t4, $zero
+	j st

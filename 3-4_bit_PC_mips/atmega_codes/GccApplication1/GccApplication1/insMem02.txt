@@ -39,7 +39,8 @@ int main(void)
 	MCUCSR|=(1<<JTD);
 	
 	unsigned int pc = 0x00;
-	
+	int clkcnt = 0;
+	int g = 0;
 	/* Replace with your application code */
 	while (1) {
 		unsigned char c ;
@@ -48,8 +49,12 @@ int main(void)
 		PORTA = c;
 		c = ((instruction[pc])>>8)&(0xff);
 		PORTC = c;
-		c = pc & (0xff);
-		PORTD = c;
+		clkcnt++;
+		if(clkcnt==100){
+			clkcnt = 0;
+			g = (1<<7) - g;
+			PORTD = g;
+		}
 		_delay_ms(10);
 	}
 }

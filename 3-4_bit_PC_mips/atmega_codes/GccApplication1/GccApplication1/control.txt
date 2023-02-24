@@ -1,15 +1,4 @@
-/*
- * control.h
- *
- * Created: 02-Feb-23 12:22:47 AM
- *  Author: mashr
- */ 
- /*
- * alu.c
- *
- * Created: 01-Feb-23 11:28:33 PM
- *  Author: mashr
- */ 
+
 #define F_CPU 1000000
 #include <util/delay.h>
 #include <avr/io.h>
@@ -97,12 +86,4 @@ int main(void)
 		_delay_ms(10);
 	}
 }
-
-#ifndef CONTROL_H_
-#define CONTROL_H_
-
-
-
-
-
-#endif /* CONTROL_H_ */
+//Control

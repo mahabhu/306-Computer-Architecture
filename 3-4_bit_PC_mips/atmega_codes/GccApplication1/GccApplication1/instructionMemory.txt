@@ -33,52 +33,23 @@ int main(void)
 	MCUCSR|=(1<<JTD);
 	
 	unsigned int pc = 0x00;
-	int prevclk = 0;
-	int currclk = 0;
-	int jump = 0;
-	int reset = 0;
-	int bsel = 0;
-	unsigned int jmpby;
-	
+	int clkcnt = 0;
+	int g = 0;
 	/* Replace with your application code */
 	while (1) {
-		prevclk = currclk;
-		char b = PINB;
-		currclk = ( b & 0b00000001);
-		jump =    ( b & 0b00000010)>>1;
-		bsel =    ( b & 0b00000100)>>2;
-		reset =   ( b & 0b00001000)>>3;
-		
-		int ins = instruction[pc];
-		
-		if(reset==1){
-			pc = 0;
-		}
-		else{
-			if(prevclk==1 && currclk==0){
-				if(jump==1) pc = (ins>>4)%(1<<8);
-				else{
-					pc++;
-					if(bsel==1){
-						jmpby = ins%16;
-						jmpby = jmpby & 15;
-						if(jmpby>=8) pc+=jmpby-16;
-						else pc+=jmpby;
-						//pc = 31;
-					}
-				}
-			}
-		}
-		pc%=256;
-		
-		unsigned char c;
+		unsigned char c ;
+		pc = PINB;
 		c = (instruction[pc]%(1<<8))&(0xff);
 		PORTA = c;
 		c = ((instruction[pc])>>8)&(0xff);
 		PORTC = c;
-		c = pc & (0xff);
-		PORTD = c;
+		clkcnt++;
+		if(clkcnt==100){
+			clkcnt = 0;
+			g = (1<<7) - g;
+			PORTD = g;
+		}
 		_delay_ms(10);
 	}
 }
-//InstructionMemory
+//Instruction Memory

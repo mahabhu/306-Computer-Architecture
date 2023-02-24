@@ -214,5 +214,29 @@ int main()
  end:
 
 
+L0: addi $t1, $zero, 5  //t1 = 5
+    addi $t2, $zero, 4  //t2 = 4
+    add $t3, $t1, $t2   //t3 = 9 = -7
+L1: j L2                //jmp
+    sub $t4, $t1, $t2
+L2: beq $t1, $t2, L3    //t1 !=t2 no jmp
+    bneq $t1, $t2, L4   // t1 != t2, jmp to L4
+L3: sw $t3, 2($t1)
+    lw $t0, 3($t2)
+L4: sw $t3, 3($t2)      //m7 = -7
+    subi $t3, $t3, 3    // t3 = 9-3 = 6
+    or $t0, $t1, $t3    // t0 = 6|5 = 7
+    andi $t4, $t2, 6    // t4 = 4&6 = 4
+    subi $t2, $t2, 1    // t2 = 4-1 = 3
+    lw $t4, 2($t1)      // t4 = m7 = -7
+    sll $t1, $t1, 1     // t1 = 10 = -5
+    srl $t2, $t2, 1     // t2 = 1
+
+
+
+
+    addi
+
+
 */
 
