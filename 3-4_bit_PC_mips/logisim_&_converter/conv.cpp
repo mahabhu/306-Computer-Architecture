@@ -31,6 +31,13 @@ string ins[16] = {"srl","sw","andi","addi",
                   "ori","j","bneq","and",
                   "beq","add","sub","nor"};
 ll linecnt = 0;
+ll labelCnt = 0;
+
+string newLabel(){
+        string h = to_string(labelCnt++);
+        h = "wowlabel"+h;
+        return h;
+    }
 
 string dec2str(ll n, ll b){
     if(b==4){
@@ -66,6 +73,7 @@ string str2hex(string s){
 }
 
 map<string,ll> M;
+vector<vector<string>> fullasm;
 
 vector<string>split(string s)
 {
@@ -88,8 +96,8 @@ vector<string>split(string s)
     return elements;
 }
 
-string convert(string line){
-    vector<string> v = split(line);
+string convert(vector<string> line){
+    vector<string> v = line;
     if(ins2dec(v[0])==-1){
         M[v[0]]=linecnt;
         //cout<< v[0]<< " "<< M[v[0]]<< endl;
@@ -144,6 +152,8 @@ string convert(string line){
     return "";
 }
 
+
+
 int main()
 {
 
@@ -154,31 +164,77 @@ int main()
     M["$t3"]=4;
     M["$t4"]=5;
     M["$sp"]=6;
-    ifstream f1("assembly.txt");
-    linecnt = 0;
-    if(f1.is_open()){
-        string line;
-        while(getline(f1,line)){
 
-            string insfin = convert(line);
-            linecnt++;
+    ifstream f0("assembly.txt");
+    linecnt = 0;
+    if(f0.is_open()){
+        string line;
+        while(getline(f0,line)){
+            vector<string> vv = split(line);
+            if(vv.size()>=2 && vv[vv.size()-2]=="push"){
+                ll k = vv.size();
+                vv[k-2]="sw";
+                vv.pb("0($sp)");
+                fullasm.pb(vv);
+                fullasm.pb({"subi","$sp","$sp","1"});
+            }
+            else if(vv.size()>=2 && vv[vv.size()-2]=="pop"){
+                ll k = vv.size();
+                string h = vv[k-1];
+                vv[k-2]="addi";
+                vv[k-1]="$sp";
+                vv.pb("$sp");
+                vv.pb("1");
+
+                fullasm.pb(vv);
+                fullasm.pb({"lw",h,"0($sp)"});
+            }
+            else if(vv.size()>=4 && vv[vv.size()-4]=="beq"){
+                ll k = vv.size();
+                string h = vv[k-1];
+                vv[k-4]="bneq";
+                vv[k-1]=newLabel();
+                M[vv[k-1]] = fullasm.size()+2;
+                fullasm.pb(vv);
+                fullasm.pb({"j",h});
+            }
+            else if(vv.size()>=4 && vv[vv.size()-4]=="bneq"){
+                ll k = vv.size();
+                string h = vv[k-1];
+                vv[k-4]="beq";
+                vv[k-1]=newLabel();
+                M[vv[k-1]] = fullasm.size()+2;
+                fullasm.pb(vv);
+                fullasm.pb({"j",h});
+            }
+            else if(vv.size()>0){
+                fullasm.pb(vv);
+            }
         }
     }
-    f1.close();
-    //cout<< endl<< endl;
-    f1.open("assembly.txt");
+    f0.close();
+    for(ll i=0; i<fullasm.size(); i++){
+        cout<< i<< " : ";
+        for(ll j=0; j<fullasm[i].size(); j++){
+            cout<< fullasm[i][j]<< " _ ";
+        }
+        cout<< endl;
+    }
+    linecnt = 0;
+    for(ll i=0; i<fullasm.size(); i++){
+        linecnt = i;
+        string insfin = convert(fullasm[i]);
+    }
     linecnt = 0;
     vector<string> instructions;
-    if(f1.is_open()){
-        string line;
-        while(getline(f1,line)){
 
-            string insfin = convert(line);
-            linecnt++;
-            if(insfin.size()==16) instructions.pb(str2hex(insfin));
-            //cout<< insfin<< endl;
-        }
+    linecnt = 0;
+    for(ll i=0; i<fullasm.size(); i++){
+        linecnt = i;
+        string insfin = convert(fullasm[i]);
+        if(insfin.size()==16) instructions.pb(str2hex(insfin));
     }
+
     cout<< "unsigned int instruction[256]={\n";
     for(ll i=0; i<256; i++){
         cout<< "0x";
@@ -189,3 +245,33 @@ int main()
 
     }
 }
+
+
+/*
+addi $t1, $zero, 3
+     subi $t2, $zero, -2
+     add $t0, $t1, $t2
+     sub $t3, $t1, $t2
+     nor $t4, $t0, $t2
+     sw $t1, 3($t2)
+     srl $t2, $t2, 1
+     beq $t2, $t3, label1
+     j end
+ label1:  sll $t3, $t3, 1
+     lw $t2, 4($t2)
+     j label2
+ label3:    or $t0, $t0, $t2
+     andi $t2, $t4, 1
+     ori $t1, $t1, 5
+     and $t1, $t2, $t4
+     j end
+ label2:    bneq $t0, $t2, label3
+ end: addi $t0, $zero, -7
+	push $t0
+	pop $t1
+	beq $t0, $t1, end
+
+
+
+
+*/

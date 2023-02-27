@@ -3,29 +3,29 @@ GccApplication1.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         000000e0  00000000  00000000  00000074  2**1
+  0 .text         000000dc  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000200  00800060  000000e0  00000154  2**0
+  1 .data         00000200  00800060  000000dc  00000150  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .comment      00000030  00000000  00000000  00000354  2**0
+  2 .comment      00000030  00000000  00000000  00000350  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000384  2**2
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000380  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000020  00000000  00000000  000003c0  2**0
+  4 .debug_aranges 00000020  00000000  00000000  000003bc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   0000065d  00000000  00000000  000003e0  2**0
+  5 .debug_info   0000065b  00000000  00000000  000003dc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000005ab  00000000  00000000  00000a3d  2**0
+  6 .debug_abbrev 000005ba  00000000  00000000  00000a37  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   0000028c  00000000  00000000  00000fe8  2**0
+  7 .debug_line   00000292  00000000  00000000  00000ff1  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000024  00000000  00000000  00001274  2**2
+  8 .debug_frame  00000024  00000000  00000000  00001284  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    0000037f  00000000  00000000  00001298  2**0
+  9 .debug_str    0000037f  00000000  00000000  000012a8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    000000c7  00000000  00000000  00001617  2**0
+ 10 .debug_loc    0000008e  00000000  00000000  00001627  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000010  00000000  00000000  000016de  2**0
+ 11 .debug_ranges 00000010  00000000  00000000  000016b5  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -65,7 +65,7 @@ Disassembly of section .text:
   60:	12 e0       	ldi	r17, 0x02	; 2
   62:	a0 e6       	ldi	r26, 0x60	; 96
   64:	b0 e0       	ldi	r27, 0x00	; 0
-  66:	e0 ee       	ldi	r30, 0xE0	; 224
+  66:	ec ed       	ldi	r30, 0xDC	; 220
   68:	f0 e0       	ldi	r31, 0x00	; 0
   6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
   6c:	05 90       	lpm	r0, Z+
@@ -74,7 +74,7 @@ Disassembly of section .text:
   72:	b1 07       	cpc	r27, r17
   74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
   76:	0e 94 41 00 	call	0x82	; 0x82 <main>
-  7a:	0c 94 6e 00 	jmp	0xdc	; 0xdc <_exit>
+  7a:	0c 94 6c 00 	jmp	0xd8	; 0xd8 <_exit>
 
 0000007e <__bad_interrupt>:
   7e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -106,76 +106,75 @@ int main(void)
 	
 	unsigned int pc = 0x00;
 	int clkcnt = 0;
-	int g = 0;
-  98:	40 e0       	ldi	r20, 0x00	; 0
-  9a:	50 e0       	ldi	r21, 0x00	; 0
+	unsigned char g = 0b00000000;
+  98:	30 e0       	ldi	r19, 0x00	; 0
 	
 	MCUCSR|=(1<<JTD);
 	MCUCSR|=(1<<JTD);
 	
 	unsigned int pc = 0x00;
 	int clkcnt = 0;
-  9c:	80 e0       	ldi	r24, 0x00	; 0
-  9e:	90 e0       	ldi	r25, 0x00	; 0
-	int g = 0;
+  9a:	80 e0       	ldi	r24, 0x00	; 0
+  9c:	90 e0       	ldi	r25, 0x00	; 0
+	unsigned char g = 0b00000000;
 	/* Replace with your application code */
 	while (1) {
 		unsigned char c ;
 		pc = PINB;
-  a0:	e6 b3       	in	r30, 0x16	; 22
-  a2:	f0 e0       	ldi	r31, 0x00	; 0
+  9e:	e6 b3       	in	r30, 0x16	; 22
+  a0:	f0 e0       	ldi	r31, 0x00	; 0
 		c = (instruction[pc]%(1<<8))&(0xff);
-  a4:	ee 0f       	add	r30, r30
-  a6:	ff 1f       	adc	r31, r31
-  a8:	e0 5a       	subi	r30, 0xA0	; 160
-  aa:	ff 4f       	sbci	r31, 0xFF	; 255
-  ac:	20 81       	ld	r18, Z
+  a2:	ee 0f       	add	r30, r30
+  a4:	ff 1f       	adc	r31, r31
+  a6:	e0 5a       	subi	r30, 0xA0	; 160
+  a8:	ff 4f       	sbci	r31, 0xFF	; 255
+  aa:	20 81       	ld	r18, Z
 		PORTA = c;
-  ae:	2b bb       	out	0x1b, r18	; 27
+  ac:	2b bb       	out	0x1b, r18	; 27
 		c = ((instruction[pc])>>8)&(0xff);
-  b0:	21 81       	ldd	r18, Z+1	; 0x01
+  ae:	21 81       	ldd	r18, Z+1	; 0x01
 		PORTC = c;
-  b2:	25 bb       	out	0x15, r18	; 21
+  b0:	25 bb       	out	0x15, r18	; 21
 		clkcnt++;
-  b4:	01 96       	adiw	r24, 0x01	; 1
+  b2:	01 96       	adiw	r24, 0x01	; 1
 		if(clkcnt==100){
-  b6:	84 36       	cpi	r24, 0x64	; 100
-  b8:	91 05       	cpc	r25, r1
-  ba:	49 f4       	brne	.+18     	; 0xce <main+0x4c>
+  b4:	84 36       	cpi	r24, 0x64	; 100
+  b6:	91 05       	cpc	r25, r1
+  b8:	41 f4       	brne	.+16     	; 0xca <main+0x48>
 			clkcnt = 0;
-			g = (1<<7) - g;
-  bc:	80 e8       	ldi	r24, 0x80	; 128
-  be:	90 e0       	ldi	r25, 0x00	; 0
-  c0:	9c 01       	movw	r18, r24
-  c2:	24 1b       	sub	r18, r20
-  c4:	35 0b       	sbc	r19, r21
-  c6:	a9 01       	movw	r20, r18
+			if(g==0x00000000) g = 0b10000000;
+  ba:	31 11       	cpse	r19, r1
+  bc:	02 c0       	rjmp	.+4      	; 0xc2 <main+0x40>
+  be:	30 e8       	ldi	r19, 0x80	; 128
+  c0:	01 c0       	rjmp	.+2      	; 0xc4 <main+0x42>
+			else g = 0b00000000;
+  c2:	30 e0       	ldi	r19, 0x00	; 0
 			PORTD = g;
-  c8:	22 bb       	out	0x12, r18	; 18
+  c4:	32 bb       	out	0x12, r19	; 18
 		PORTA = c;
 		c = ((instruction[pc])>>8)&(0xff);
 		PORTC = c;
 		clkcnt++;
 		if(clkcnt==100){
 			clkcnt = 0;
-  ca:	80 e0       	ldi	r24, 0x00	; 0
-  cc:	90 e0       	ldi	r25, 0x00	; 0
+  c6:	80 e0       	ldi	r24, 0x00	; 0
+  c8:	90 e0       	ldi	r25, 0x00	; 0
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
-  ce:	e3 ec       	ldi	r30, 0xC3	; 195
-  d0:	f9 e0       	ldi	r31, 0x09	; 9
-  d2:	31 97       	sbiw	r30, 0x01	; 1
-  d4:	f1 f7       	brne	.-4      	; 0xd2 <main+0x50>
-  d6:	00 c0       	rjmp	.+0      	; 0xd8 <main+0x56>
-  d8:	00 00       	nop
-  da:	e2 cf       	rjmp	.-60     	; 0xa0 <main+0x1e>
+  ca:	e3 ec       	ldi	r30, 0xC3	; 195
+  cc:	f9 e0       	ldi	r31, 0x09	; 9
+  ce:	31 97       	sbiw	r30, 0x01	; 1
+  d0:	f1 f7       	brne	.-4      	; 0xce <main+0x4c>
+  d2:	00 c0       	rjmp	.+0      	; 0xd4 <main+0x52>
+  d4:	00 00       	nop
+  d6:	e3 cf       	rjmp	.-58     	; 0x9e <main+0x1c>
 
-000000dc <_exit>:
-  dc:	f8 94       	cli
+000000d8 <_exit>:
+  d8:	f8 94       	cli
 
-000000de <__stop_program>:
-  de:	ff cf       	rjmp	.-2      	; 0xde <__stop_program>
+000000da <__stop_program>:
+  da:	ff cf       	rjmp	.-2      	; 0xda <__stop_program>

@@ -1,19 +1,24 @@
-st:	addi $t0, $zero, 14
-	addi $t1, $zero, 13
-	addi $t2, $zero, 0
-	addi $t3, $zero, 0
-	addi $t4, $zero, 0
-L0:	beq $t1, $zero, end
-	addi $t3, $zero, 15
-	sub $t3, $t3, $t0
-	addi $t3, $t3, 1
-	sub $t3, $t2, $t3
-	andi $t3, $t3, 8
-	bneq $t3, $zero, L1
-	addi $t4, $t4, 1
-L1:	add $t2, $t2, $t0
-	subi $t1, $t1, 1
-	j L0
-end:	add $t0, $t2, $zero
-	add $t1, $t4, $zero
-	j st
+	addi $t1, $zero, 3
+	subi $t2, $zero, 2
+	addi $t2, $t2, 4
+	add $t0, $t1, $t2
+	sub $t3, $t1, $t2
+	nor $t4, $t0, $t2
+	sw $t1, 3($t2)
+	srl $t2, $t2, 1
+	beq $t2, $t3, label1
+	j end
+label1:	sll $t3, $t3, 1
+	lw $t2, 4($t2)
+	push $t1
+	push $t2
+	j label2
+label3:	or $t0, $t0, $t2
+	andi $t2, $t4, 1
+	ori $t1, $t1, 5
+	pop $t2
+	and $t1, $t2, $t4
+	pop $t1
+	j end
+label2:	bneq $t0, $t2, label3
+end:
